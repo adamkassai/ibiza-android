@@ -1,0 +1,52 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.kassaiweb.ibiza.MainActivity">
+
+    <item
+        android:id="@+id/action_front"
+        android:title="@string/front_page" />
+
+    <item
+        android:id="@+id/action_tasks"
+        android:title="@string/tasks" />
+
+    <item
+        android:id="@+id/action_costs"
+        android:title="@string/costs" />
+
+    <!--<item
+        android:id="@+id/action_news"
+        android:title="@string/news" />-->
+
+    <!--<item
+        android:id="@+id/action_weather"
+        android:title="@string/weather" />-->
+
+    <item
+        android:id="@+id/action_poll"
+        android:title="@string/poll" />
+
+    <item
+        android:id="@+id/action_random"
+        android:title="Tóruszlény" />
+
+
+    <item
+        android:id="@+id/action_places"
+        android:title="Közeli helyek" />
+
+    <item
+        android:id="@+id/action_shopping"
+        android:title="Bevásárlólista" />
+
+    <item
+        android:id="@+id/action_notification"
+        android:title="Értesítés küldése" />
+
+
+    <item
+        android:id="@+id/action_change_user"
+        android:title="@string/change_user" />
+
+</menu>

@@ -44,7 +44,6 @@
         android:id="@+id/action_notification"
         android:title="Értesítés küldése" />
 
-
     <item
         android:id="@+id/action_change_user"
         android:title="@string/change_user" />

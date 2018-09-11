@@ -24,6 +24,7 @@ import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.FrontPageFragment;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.NotificationUtil;
 
 import java.util.Calendar;
 
@@ -187,7 +188,7 @@ public class TaskCreateFragment extends Fragment {
                 taskRef.setValue(task);
 
                 MainActivity activity = (MainActivity)getActivity();
-                activity.sendNotification("Új feladat", task.getDescription(), userId);
+                NotificationUtil.sendNotification("Új feladat", task.getDescription(), userId);
                 activity.replaceFragment(new TaskListFragment());
 
             }

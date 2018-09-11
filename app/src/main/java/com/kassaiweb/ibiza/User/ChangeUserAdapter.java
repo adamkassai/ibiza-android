@@ -32,6 +32,7 @@ public class ChangeUserAdapter extends RecyclerView.Adapter<ChangeUserAdapter.Vi
     private RadioButton lastChecked;
     SharedPreferences prefs;
     MainActivity activity;
+    DatabaseReference usersRef;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -55,21 +56,21 @@ public class ChangeUserAdapter extends RecyclerView.Adapter<ChangeUserAdapter.Vi
         this.userId = prefs.getString(Constant.USERID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("users");
-/*
+        usersRef = database.getReference("users");
 
-Ádám
-Ági
-Balázs
-Bálint
-Bumbi
-Lajos
-Linda
-Máté
-Meli
-Olivér
-Petra
-Zsolt
+        /*
+        Ádám
+        Ági
+        Balázs
+        Bálint
+        Bumbi
+        Lajos
+        Linda
+        Máté
+        Meli
+        Olivér
+        Petra
+        Zsolt
 
 
         User person = new User();
@@ -155,22 +156,38 @@ Zsolt
         ref = usersRef.push();
         person.setId(ref.getKey());
         ref.setValue(person);
-*/
+        */
 
+        // check firebase connection
+        /*DatabaseReference connectedRef = FirebaseDatabase.getInstance().getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) {
+                    System.out.println("connected");
+                } else {
+                    System.out.println("not connected");
+                }
+            }
 
-
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });*/
 
         usersRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    users.clear();
+                users.clear();
 
-                    for (DataSnapshot userDataSnapshot : dataSnapshot.getChildren()) {
-                        users.add(userDataSnapshot.getValue(User.class));
-                    }
+                for (DataSnapshot userDataSnapshot : dataSnapshot.getChildren()) {
+                    users.add(userDataSnapshot.getValue(User.class));
+                }
 
-                    ChangeUserAdapter.this.notifyDataSetChanged();
+                ChangeUserAdapter.this.notifyDataSetChanged();
             }
 
             @Override
@@ -179,11 +196,7 @@ Zsolt
                 Log.w("ChangeUser", "Failed to read value.", error.toException());
             }
         });
-
-
     }
-
-
 
     @Override
     public ChangeUserAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -210,7 +223,7 @@ Zsolt
             @Override
             public void onClick(View view) {
 
-                RadioButton radioButton = (RadioButton)view;
+                RadioButton radioButton = (RadioButton) view;
 
                 if (radioButton.isChecked()) {
 
@@ -222,9 +235,9 @@ Zsolt
 
                     SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putString(Constant.USERID, users.get((Integer)radioButton.getTag()).getId());
-                    editor.putString(Constant.USERNAME, users.get((Integer)radioButton.getTag()).getName());
-                    editor.putString(Constant.USER_IMAGE, users.get((Integer)radioButton.getTag()).getImage());
+                    editor.putString(Constant.USERID, users.get((Integer) radioButton.getTag()).getId());
+                    editor.putString(Constant.USERNAME, users.get((Integer) radioButton.getTag()).getName());
+                    editor.putString(Constant.USER_IMAGE, users.get((Integer) radioButton.getTag()).getImage());
                     editor.apply();
 
                     activity.replaceFragment(new FrontPageFragment());
@@ -233,11 +246,8 @@ Zsolt
                 } else {
                     lastChecked = null;
                 }
-
             }
         });
-
-
     }
 
     @Override

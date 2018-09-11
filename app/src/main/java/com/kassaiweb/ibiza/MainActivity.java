@@ -1,20 +1,15 @@
 package com.kassaiweb.ibiza;
 
-
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,24 +26,21 @@ import com.kassaiweb.ibiza.Place.PlacesFragment;
 import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
 import com.kassaiweb.ibiza.Task.TaskListFragment;
 import com.kassaiweb.ibiza.User.ChangeUserFragment;
+import com.kassaiweb.ibiza.Util.ConnectionUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
 
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String TAG = MainActivity.class.getSimpleName();
     private OkHttpClient client = new OkHttpClient();
     private String username;
 
@@ -84,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onResume() {
-
         super.onResume();
 
         SharedPreferences prefs = getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
@@ -98,12 +89,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             replaceFragment(newFragment);
         }
 
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
@@ -148,9 +137,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.w(TAG, "GoogleApiClient.OnConnectionFailed has been called");
     }
-
 
     private class VersionCheck extends AsyncTask<String, Void, String> {
 
@@ -176,9 +164,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
         @Override
         protected void onPostExecute(String result) {
-
             if (result != null) {
-
                 SharedPreferences prefs = getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
                 int version = prefs.getInt("version", 1);
                 int newVersion = Integer.parseInt(result);
@@ -191,15 +177,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
                     replaceFragment(updateFragment);
                 }
-
-
             }
-
-
         }
-
     }
-
 
     private void initializeImageLoader() {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
@@ -220,7 +200,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
 
     public void replaceFragment(final Fragment fragment) {
 
-        if (isNetworkAvailable()) {
+        if (ConnectionUtil.isNetworkAvailable()) {
             //findViewById(R.id.main_fragment).setVisibility(View.VISIBLE);
             findViewById(R.id.main_error).setVisibility(View.GONE);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -243,25 +223,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             fm.popBackStack();
         } else {
             super.onBackPressed();
-        }
-    }
-
-    public void sendNotification(String title, String body, String userId) {
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference messageRef = database.getReference("messages").push();
-        messageRef.setValue(new Notification(title, body, userId));
-
-    }
-
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        if (activeNetworkInfo != null) {
-            return activeNetworkInfo.isConnected();
-        } else {
-            return true;
         }
     }
 

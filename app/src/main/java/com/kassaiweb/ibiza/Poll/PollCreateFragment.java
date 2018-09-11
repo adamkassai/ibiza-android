@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.NotificationUtil;
 
 import java.util.ArrayList;
 
@@ -106,7 +107,7 @@ public class PollCreateFragment extends Fragment {
                 newPollRef.setValue(newPoll);
 
                 MainActivity activity = (MainActivity)getActivity();
-                activity.sendNotification("Új szavazás", newPoll.getQuestion(), userId);
+                NotificationUtil.sendNotification("Új szavazás", newPoll.getQuestion(), userId);
                 activity.replaceFragment(new PollsPagerFragment());
 
             }

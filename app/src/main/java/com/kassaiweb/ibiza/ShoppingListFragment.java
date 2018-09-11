@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kassaiweb.ibiza.Poll.Poll;
+import com.kassaiweb.ibiza.Util.NotificationUtil;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -70,7 +71,7 @@ public class ShoppingListFragment extends Fragment {
                 }
 
                 if (notificationCheckbox.isChecked()) {
-                    ((MainActivity)getActivity()).sendNotification("Bevásárlólista", newItem.getText().toString(), userId);
+                    NotificationUtil.sendNotification("Bevásárlólista", newItem.getText().toString(), userId);
                 }
 
 

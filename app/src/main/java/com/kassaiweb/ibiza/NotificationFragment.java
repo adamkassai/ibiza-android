@@ -27,6 +27,7 @@ import com.kassaiweb.ibiza.Cost.CostPersonAdapter;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Util.NotificationUtil;
 
 import java.util.ArrayList;
 
@@ -80,7 +81,7 @@ public class NotificationFragment extends Fragment {
                         }
 
                         if (body.getText().toString()!=null && !body.getText().toString().equals("")) {
-                            ((MainActivity)getActivity()).sendNotification(title, body.getText().toString(), userId);
+                            NotificationUtil.sendNotification(title, body.getText().toString(), userId);
                             Toast.makeText(getContext(), "Értesítés kiküldve", Toast.LENGTH_LONG).show();
                             body.setText("");
                         }else{

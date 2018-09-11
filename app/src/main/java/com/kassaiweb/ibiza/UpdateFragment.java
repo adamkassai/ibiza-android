@@ -41,7 +41,7 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences("nyaralas2018", MODE_PRIVATE).edit();
+                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE).edit();
                 editor.putInt("version", version);
                 editor.apply();
 

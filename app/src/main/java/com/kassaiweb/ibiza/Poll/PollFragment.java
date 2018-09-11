@@ -29,7 +29,6 @@ public class PollFragment extends Fragment {
 
     private String pollId;
     private Poll poll;
-    private Gson gson = new Gson();
     private String userId;
 
     private RecyclerView mRecyclerView;
@@ -48,7 +47,6 @@ public class PollFragment extends Fragment {
 
         Bundle args = getArguments();
         pollId = args.getString("pollId", null);
-
 
 
         return inflater.inflate(R.layout.fragment_poll, container, false);
@@ -75,13 +73,13 @@ public class PollFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                MainActivity activity = (MainActivity)getActivity();
+                MainActivity activity = (MainActivity) getActivity();
                 activity.replaceFragment(new PollCreateFragment());
 
             }
         });
 
-        if (pollId!=null) {
+        if (pollId != null) {
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference pollsRef = database.getReference("polls").child(pollId);
@@ -92,7 +90,7 @@ public class PollFragment extends Fragment {
 
                     poll = dataSnapshot.getValue(Poll.class);
 
-                    if (poll!=null) {
+                    if (poll != null) {
 
                         question.setText(poll.getQuestion());
 
@@ -118,20 +116,17 @@ public class PollFragment extends Fragment {
                             }
                         });
 
-                        if (poll.getChoice().equals(Constant.CHOICE_MULTIPLE))
-                        {
+                        if (poll.getChoice().equals(Constant.CHOICE_MULTIPLE)) {
                             multipleTextView.setVisibility(View.VISIBLE);
                         }
 
-                        if (poll.isClosed())
-                        {
+                        if (poll.isClosed()) {
                             multipleTextView.setText(R.string.poll_closed);
                             multipleTextView.setVisibility(View.VISIBLE);
                             send.setVisibility(View.GONE);
                         }
 
-                        if (poll.getCreatorId().equals(userId))
-                        {
+                        if (poll.getCreatorId().equals(userId)) {
                             closeButton.setVisibility(View.VISIBLE);
 
                             if (poll.isClosed()) {
@@ -145,7 +140,7 @@ public class PollFragment extends Fragment {
                                         mAdapter.notifyDataSetChanged();
                                     }
                                 });
-                            }else{
+                            } else {
                                 closeButton.setText(R.string.close_poll);
                                 closeButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -160,8 +155,7 @@ public class PollFragment extends Fragment {
 
                         }
 
-                        if (poll.getCreatorId().equals(userId))
-                        {
+                        if (poll.getCreatorId().equals(userId)) {
                             removeButton.setVisibility(View.VISIBLE);
                             removeButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -170,18 +164,13 @@ public class PollFragment extends Fragment {
                                     FirebaseDatabase database = FirebaseDatabase.getInstance();
                                     database.getReference("polls").child(pollId).removeValue();
 
-                                    MainActivity activity = (MainActivity)getActivity();
+                                    MainActivity activity = (MainActivity) getActivity();
                                     activity.replaceFragment(new PollsPagerFragment());
 
                                 }
                             });
-
                         }
-
-
-
                     }
-
                 }
 
                 @Override
@@ -190,9 +179,6 @@ public class PollFragment extends Fragment {
                 }
             });
         }
-
-
-
 
         /*TextView header = view.findViewById(R.id.news_header);
         if (news.getHeader()!=null) {
@@ -209,8 +195,5 @@ public class PollFragment extends Fragment {
         if (news.getCover()!=null) {
             ImageLoader.getInstance().displayImage(news.getCover(), cover);
         }*/
-
-
     }
-
 }

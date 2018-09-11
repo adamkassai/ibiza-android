@@ -1,7 +1,8 @@
 package com.kassaiweb.ibiza.Cost;
 
-
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -12,11 +13,11 @@ import android.view.ViewGroup;
 
 import com.kassaiweb.ibiza.R;
 
-
 public class CostPagerFragment extends Fragment {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private TabLayout mTabLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,10 +32,9 @@ public class CostPagerFragment extends Fragment {
         view.findViewById(R.id.progress).setVisibility(View.GONE);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) view.findViewById(R.id.container);
+        mTabLayout = view.findViewById(R.id.container_tabLayout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-
     }
-
 
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -48,13 +48,13 @@ public class CostPagerFragment extends Fragment {
 
             Fragment f;
 
-            if (position==0) {
+            if (position == 0) {
                 f = new CostListFragment();
-            }else if (position==1) {
+            } else if (position == 1) {
                 f = new DebtListFragment();
-            }else if (position==2) {
+            } else if (position == 2) {
                 f = new PaymentListFragment();
-            }else{
+            } else {
                 f = new CostListFragment();
             }
 
@@ -65,8 +65,22 @@ public class CostPagerFragment extends Fragment {
         public int getCount() {
             return 3;
         }
-    }
 
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0:
+                    return "Költségek";
+                case 1:
+                    return "Tartozások";
+                case 2:
+                    return "Fizetési előzmények";
+                default:
+                    return "Költségek";
+            }
+        }
+    }
 
 
 }

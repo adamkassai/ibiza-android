@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Task;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,8 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.R;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class TaskFragment extends Fragment {
 
@@ -62,8 +60,7 @@ public class TaskFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         description = view.findViewById(R.id.task_description);
         volunteerNumber = view.findViewById(R.id.task_volunteerNumber);

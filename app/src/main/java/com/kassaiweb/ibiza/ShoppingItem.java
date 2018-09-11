@@ -4,7 +4,6 @@ import java.util.Date;
 
 public class ShoppingItem {
 
-
     private String id;
     private String item;
     private String userId;

@@ -1,7 +1,6 @@
 package com.kassaiweb.ibiza.Place;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -15,10 +14,9 @@ import com.google.android.gms.location.places.Place;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> {
 
@@ -48,8 +46,7 @@ public class PlaceAdapter extends RecyclerView.Adapter<PlaceAdapter.ViewHolder> 
         this.activity = (MainActivity)activity;
         this.places = places;
 
-        SharedPreferences prefs = activity.getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
     }
 

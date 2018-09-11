@@ -1,10 +1,7 @@
 package com.kassaiweb.ibiza;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,19 +16,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kassaiweb.ibiza.Constant;
-import com.kassaiweb.ibiza.Cost.Cost;
-import com.kassaiweb.ibiza.Cost.CostPagerFragment;
-import com.kassaiweb.ibiza.Cost.CostPerson;
-import com.kassaiweb.ibiza.Cost.CostPersonAdapter;
-import com.kassaiweb.ibiza.MainActivity;
-import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.User.User;
 import com.kassaiweb.ibiza.Util.NotificationUtil;
-
-import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class NotificationFragment extends Fragment {
 
@@ -56,8 +43,7 @@ public class NotificationFragment extends Fragment {
         send = view.findViewById(R.id.notification_send);
         anonim = view.findViewById(R.id.notification_anonim);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users").child(userId);

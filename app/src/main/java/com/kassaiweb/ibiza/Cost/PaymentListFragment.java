@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Cost;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kassaiweb.ibiza.Constant;
-import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class PaymentListFragment extends Fragment {
 
@@ -40,8 +37,7 @@ public class PaymentListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         mAdapter = new PaymentAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);

@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Poll;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Answer {

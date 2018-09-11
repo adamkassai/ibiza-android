@@ -1,7 +1,6 @@
 package com.kassaiweb.ibiza;
 
 
-import java.util.ArrayList;
 import java.util.Date;
 
 public class Notification {
@@ -10,7 +9,6 @@ public class Notification {
     private String body;
     private String creatorId;
     private Date date;
-
 
     public Notification() {
     }

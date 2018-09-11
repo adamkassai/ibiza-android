@@ -15,13 +15,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 
 import java.util.ArrayList;
-
-import okhttp3.OkHttpClient;
 
 public class PollsPagerFragment extends Fragment {
 

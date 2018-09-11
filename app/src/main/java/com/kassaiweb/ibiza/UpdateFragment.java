@@ -1,7 +1,6 @@
 package com.kassaiweb.ibiza;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,9 +10,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Movie.Movie;
-import com.kassaiweb.ibiza.Movie.MoviePagerFragment;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class UpdateFragment extends Fragment {
 
@@ -41,9 +38,7 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                SharedPreferences.Editor editor = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE).edit();
-                editor.putInt("version", version);
-                editor.apply();
+                SPUtil.putInt(Constant.VERSION, version);
 
                 MainActivity activity = (MainActivity)getActivity();
                 activity.replaceFragment(new FrontPageFragment());

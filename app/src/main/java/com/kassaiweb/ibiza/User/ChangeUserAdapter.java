@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.User;
 
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,18 +18,16 @@ import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.FrontPageFragment;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ChangeUserAdapter extends RecyclerView.Adapter<ChangeUserAdapter.ViewHolder> {
 
     private ArrayList<User> users = new ArrayList<>();
     private String userId;
     private RadioButton lastChecked;
-    SharedPreferences prefs;
     MainActivity activity;
     DatabaseReference usersRef;
 
@@ -52,8 +49,7 @@ public class ChangeUserAdapter extends RecyclerView.Adapter<ChangeUserAdapter.Vi
     public ChangeUserAdapter(MainActivity activity) {
 
         this.activity = activity;
-        this.prefs = activity.getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        this.userId = prefs.getString(Constant.USERID, null);
+        this.userId = SPUtil.getString(Constant.USERID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         usersRef = database.getReference("users");
@@ -233,12 +229,10 @@ public class ChangeUserAdapter extends RecyclerView.Adapter<ChangeUserAdapter.Vi
 
                     lastChecked = radioButton;
 
-                    SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putString(Constant.USERID, users.get((Integer) radioButton.getTag()).getId());
-                    editor.putString(Constant.USERNAME, users.get((Integer) radioButton.getTag()).getName());
-                    editor.putString(Constant.USER_IMAGE, users.get((Integer) radioButton.getTag()).getImage());
-                    editor.apply();
+                    SPUtil.putString(Constant.USERID, users.get((Integer) radioButton.getTag()).getId());
+                    SPUtil.putString(Constant.USERNAME, users.get((Integer) radioButton.getTag()).getName());
+                    SPUtil.putString(Constant.USER_IMAGE, users.get((Integer) radioButton.getTag()).getImage());
 
                     activity.replaceFragment(new FrontPageFragment());
 

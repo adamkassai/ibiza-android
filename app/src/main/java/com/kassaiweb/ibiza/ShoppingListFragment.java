@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,10 +14,8 @@ import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.kassaiweb.ibiza.Poll.Poll;
 import com.kassaiweb.ibiza.Util.NotificationUtil;
-
-import static android.content.Context.MODE_PRIVATE;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -49,8 +46,7 @@ public class ShoppingListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         mAdapter = new ShoppingAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);

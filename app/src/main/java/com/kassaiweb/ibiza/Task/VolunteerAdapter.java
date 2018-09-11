@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Task;
 
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
@@ -16,17 +14,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kassaiweb.ibiza.Constant;
-import com.kassaiweb.ibiza.FrontPageFragment;
-import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.User.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class VolunteerAdapter extends RecyclerView.Adapter<VolunteerAdapter.ViewHolder> {
 

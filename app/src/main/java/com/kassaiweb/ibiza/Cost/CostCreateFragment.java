@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Cost;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -22,12 +20,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
-import com.kassaiweb.ibiza.Task.TaskListFragment;
 import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class CostCreateFragment extends Fragment {
 
@@ -137,9 +133,7 @@ public class CostCreateFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
-
+        userId = SPUtil.getString(Constant.USERID, null);
 
         send = view.findViewById(R.id.cost_save);
         divide  = view.findViewById(R.id.cost_divide);

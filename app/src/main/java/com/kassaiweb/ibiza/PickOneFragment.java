@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -16,18 +15,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
-import com.kassaiweb.ibiza.Movie.Movie;
-import com.kassaiweb.ibiza.User.ChangeUserAdapter;
-import com.kassaiweb.ibiza.User.ChangeUserFragment;
 import com.kassaiweb.ibiza.User.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class PickOneFragment extends Fragment {
 

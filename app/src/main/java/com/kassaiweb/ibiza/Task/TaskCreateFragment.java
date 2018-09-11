@@ -1,11 +1,9 @@
 package com.kassaiweb.ibiza.Task;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +12,15 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Constant;
-import com.kassaiweb.ibiza.FrontPageFragment;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.Util.NotificationUtil;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 import java.util.Calendar;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class TaskCreateFragment extends Fragment {
 
@@ -66,8 +58,7 @@ public class TaskCreateFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         description = view.findViewById(R.id.task_description);
         volunteerNumber = view.findViewById(R.id.task_volunteerNumber);

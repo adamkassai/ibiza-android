@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza;
 
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -18,8 +17,6 @@ import android.view.View;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
 import com.kassaiweb.ibiza.Place.PlacesFragment;
@@ -27,6 +24,7 @@ import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
 import com.kassaiweb.ibiza.Task.TaskListFragment;
 import com.kassaiweb.ibiza.User.ChangeUserFragment;
 import com.kassaiweb.ibiza.Util.ConnectionUtil;
+import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -78,8 +76,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
     public void onResume() {
         super.onResume();
 
-        SharedPreferences prefs = getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        username = prefs.getString(Constant.USERNAME, null);
+        username = SPUtil.getString(Constant.USERNAME, null);
 
         if (username == null) {
             Fragment newFragment = new ChangeUserFragment();
@@ -165,8 +162,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
         @Override
         protected void onPostExecute(String result) {
             if (result != null) {
-                SharedPreferences prefs = getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-                int version = prefs.getInt("version", 1);
+                int version = SPUtil.getInt(Constant.VERSION, 1);
                 int newVersion = Integer.parseInt(result);
 
                 if (newVersion > version) {

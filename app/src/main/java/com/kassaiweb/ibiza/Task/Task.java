@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Task;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 

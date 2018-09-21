@@ -1,15 +1,12 @@
 package com.kassaiweb.ibiza.Task;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,19 +19,16 @@ import com.google.firebase.database.ValueEventListener;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
@@ -72,8 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         this.activity = activity;
 
-        SharedPreferences prefs = activity.getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");

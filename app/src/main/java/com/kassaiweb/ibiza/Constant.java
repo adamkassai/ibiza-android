@@ -2,12 +2,15 @@ package com.kassaiweb.ibiza;
 
 public class Constant {
 
+    // For Shared Preferences:
+    public static final String SP_NAME = "nyaralas2018"; // the name for the SharedPreferences file
+    public static final String USERNAME = "username"; // String
+    public static final String USER_IMAGE = "user_image"; // String
+    public static final String USERID = "userId"; // String
+    public static final String VERSION = "version"; // int
+
     public static final String CHOICE_SINGLE = "single";
     public static final String CHOICE_MULTIPLE = "multiple";
-    public static final String APP_NAME = "nyaralas2018";
-    public static final String USERNAME = "username";
-    public static final String USER_IMAGE = "user_image";
-    public static final String USERID = "userId";
 
     public static final String TASK_ASSIGNED = "assigned";
     public static final String TASK_VOLUNTEERS = "volunteers";

@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza.Poll;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,10 +20,9 @@ import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.Util.NotificationUtil;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 import java.util.ArrayList;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class PollCreateFragment extends Fragment {
 
@@ -48,8 +46,7 @@ public class PollCreateFragment extends Fragment {
 
         view.findViewById(R.id.progress).setVisibility(View.GONE);
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         final TextView questionTextView = view.findViewById(R.id.poll_question);
         final TextView optionTextView = view.findViewById(R.id.poll_option);

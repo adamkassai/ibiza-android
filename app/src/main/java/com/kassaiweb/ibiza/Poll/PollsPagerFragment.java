@@ -1,6 +1,8 @@
 package com.kassaiweb.ibiza.Poll;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -15,21 +17,18 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 
 import java.util.ArrayList;
 
-import okhttp3.OkHttpClient;
-
 public class PollsPagerFragment extends Fragment {
-
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private TabLayout mTabLayout;
     private ArrayList<Poll> polls = new ArrayList<>();
-    private  boolean firstInit=true;
+    private boolean firstInit = true;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +43,7 @@ public class PollsPagerFragment extends Fragment {
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getChildFragmentManager());
         mViewPager = (ViewPager) getView().findViewById(R.id.container);
+        mTabLayout = getView().findViewById(R.id.container_tabLayout);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -58,19 +58,17 @@ public class PollsPagerFragment extends Fragment {
                     polls.clear();
 
                     for (DataSnapshot pollDataSnapshot : dataSnapshot.getChildren()) {
-
                         polls.add(pollDataSnapshot.getValue(Poll.class));
-
                     }
 
-                    if (polls.size()==0) {
-                        MainActivity activity = (MainActivity)getActivity();
+                    if (polls.size() == 0) {
+                        MainActivity activity = (MainActivity) getActivity();
                         activity.replaceFragment(new PollCreateFragment());
                     }
 
                     //getView().findViewById(R.id.progress).setVisibility(View.GONE);
                     mSectionsPagerAdapter.notifyDataSetChanged();
-                    firstInit=false;
+                    firstInit = false;
                 }
             }
 
@@ -85,7 +83,6 @@ public class PollsPagerFragment extends Fragment {
     }
 
 
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -95,21 +92,22 @@ public class PollsPagerFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
 
-                Fragment f = new PollFragment();
-                Bundle args = new Bundle();
-                args.putString("pollId", polls.get(polls.size()-1-position).getId());
-                f.setArguments(args);
-                return f;
-
-
+            Fragment f = new PollFragment();
+            Bundle args = new Bundle();
+            args.putString("pollId", polls.get(polls.size() - 1 - position).getId());
+            f.setArguments(args);
+            return f;
         }
 
         @Override
         public int getCount() {
             return polls.size();
         }
+
+        @Nullable
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return (position + 1) + ".";
+        }
     }
-
-
-
 }

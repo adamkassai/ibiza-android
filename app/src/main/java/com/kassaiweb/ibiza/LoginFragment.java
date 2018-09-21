@@ -1,6 +1,5 @@
 package com.kassaiweb.ibiza;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,9 +11,8 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Movie.Movie;
 import com.kassaiweb.ibiza.User.ChangeUserFragment;
+import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class LoginFragment extends Fragment {
 
@@ -33,9 +31,8 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
 
-        SharedPreferences prefs = getActivity().getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        String user = prefs.getString(Constant.USERNAME, null);
-        String image = prefs.getString(Constant.USER_IMAGE, null);
+        String user = SPUtil.getString(Constant.USERNAME, null);
+        String image = SPUtil.getString(Constant.USER_IMAGE, null);
 
         TextView usernameTextView = view.findViewById(R.id.username);
         if (user!=null) {

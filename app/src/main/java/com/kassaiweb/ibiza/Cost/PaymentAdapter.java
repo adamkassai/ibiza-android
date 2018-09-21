@@ -1,8 +1,6 @@
 package com.kassaiweb.ibiza.Cost;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,12 +19,11 @@ import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
 import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHolder> {
 
@@ -64,8 +61,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
         this.activity = (MainActivity)activity;
 
-        SharedPreferences prefs = activity.getSharedPreferences(Constant.APP_NAME, MODE_PRIVATE);
-        userId = prefs.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USERID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");

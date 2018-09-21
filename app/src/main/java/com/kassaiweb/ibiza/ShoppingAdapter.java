@@ -1,7 +1,6 @@
 package com.kassaiweb.ibiza;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,14 +16,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kassaiweb.ibiza.Cost.Payment;
-import com.kassaiweb.ibiza.User.User;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.ViewHolder> {
 

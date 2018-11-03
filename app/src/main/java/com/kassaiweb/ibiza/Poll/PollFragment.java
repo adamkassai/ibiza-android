@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
@@ -61,7 +60,7 @@ public class PollFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         question = view.findViewById(R.id.poll_question);
         send = view.findViewById(R.id.poll_send);

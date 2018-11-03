@@ -1,4 +1,4 @@
-package com.kassaiweb.ibiza;
+package com.kassaiweb.ibiza.Notification;
 
 
 import java.util.Date;

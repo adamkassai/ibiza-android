@@ -38,7 +38,7 @@ public class TaskListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         mAdapter = new TaskAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);

@@ -46,7 +46,7 @@ public class ShoppingListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         mAdapter = new ShoppingAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);

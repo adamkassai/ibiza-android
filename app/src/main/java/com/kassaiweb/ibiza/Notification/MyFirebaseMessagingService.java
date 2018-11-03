@@ -1,4 +1,4 @@
-package com.kassaiweb.ibiza;
+package com.kassaiweb.ibiza.Notification;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -10,6 +10,8 @@ import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.kassaiweb.ibiza.MainActivity;
+import com.kassaiweb.ibiza.R;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 

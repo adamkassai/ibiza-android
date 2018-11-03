@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Majdnem Ibiza</string>
+    <!--facebook auth data-->
+    <string name="facebook_app_id">296443651086920</string>
+    <string name="fb_login_protocol_scheme">fb296443651086920</string>
+
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="cast">Szereplők</string>
@@ -19,7 +23,7 @@
     <string name="new_poll">Új szavazás</string>
     <string name="remove_poll">Szavazás törlése</string>
     <string name="front_page">Főoldal</string>
-    <string name="change_user">Felhasználóváltás</string>
+    <string name="logout">Kijelentkezés</string>
     <string name="continue_to_front_page">Tovább a Főoldalra</string>
     <string name="go_to_change_user">Belépés más néven</string>
     <string name="again">Random tóruszlény</string>
@@ -45,4 +49,16 @@
     <string name="cost_total">Teljes összeg</string>
     <string name="costs">Pénzügyek</string>
     <string name="anonim_message">Társadalmi célú anonim üzenet</string>
+    <string name="internet_connection_error">Internet connection is unavailable!</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="welcome_xy">Üdv, %1$s!</string>
+
+    <string name="scanner_hint">Scan a barcode from a member of the group!</string>
+    <string name="group_connection_error_msg">Valami probléma adódott az azonosítás során! Próbáld újra később!</string>
+    <string name="group_connection_qr_error_msg">A beszkennelt QR code nem érvényes!</string>
+    <string name="connect_to_group">Csatlakozás a(z) %1$s csoporthoz</string>
+    <string name="password">jelszó</string>
+    <string name="check">Ellenőriz</string>
 </resources>

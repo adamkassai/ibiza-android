@@ -2,7 +2,7 @@ package com.kassaiweb.ibiza.Util;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.kassaiweb.ibiza.Notification;
+import com.kassaiweb.ibiza.Notification.Notification;
 
 public class NotificationUtil {
 

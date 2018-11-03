@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,14 +17,13 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
 import com.kassaiweb.ibiza.News.News;
+import com.kassaiweb.ibiza.Notification.NotificationFragment;
 import com.kassaiweb.ibiza.Place.PlacesFragment;
 import com.kassaiweb.ibiza.Poll.Poll;
 import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
 import com.kassaiweb.ibiza.Task.Task;
 import com.kassaiweb.ibiza.Task.TaskListFragment;
-import com.kassaiweb.ibiza.User.ChangeUserFragment;
 import com.kassaiweb.ibiza.Util.SPUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class FrontPageFragment extends Fragment {
 
@@ -45,26 +43,7 @@ public class FrontPageFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
-        final String user = SPUtil.getString(Constant.USERNAME, null);
-        userId = SPUtil.getString(Constant.USERID, null);
-        String image = SPUtil.getString(Constant.USER_IMAGE, null);
-
-        TextView usernameTextView = view.findViewById(R.id.username);
-        if (user!=null) {
-            usernameTextView.setText(user);
-        }
-
-        ImageView userImage = view.findViewById(R.id.userImage);
-        ImageLoader.getInstance().displayImage(image, userImage);
-
-        view.findViewById(R.id.button_changeUser).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new ChangeUserFragment());
-            }
-        });
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         view.findViewById(R.id.front_cost_box).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,5 +3,7 @@
     <color name="colorPrimary">#1565c0</color>
     <color name="colorPrimaryDark">#003c8f</color>
     <color name="colorAccent">#5e92f3</color>
+    <color name="group_chooser">#dddddd</color>
+    <color name="group_chooser_2">#bbbbbb</color>
 
 </resources>

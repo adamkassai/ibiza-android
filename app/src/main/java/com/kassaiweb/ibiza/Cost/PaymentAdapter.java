@@ -18,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
-import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Data.User;
 import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -61,7 +61,7 @@ public class PaymentAdapter extends RecyclerView.Adapter<PaymentAdapter.ViewHold
 
         this.activity = (MainActivity)activity;
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users");

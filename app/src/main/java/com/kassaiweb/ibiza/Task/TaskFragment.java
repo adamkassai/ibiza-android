@@ -60,7 +60,7 @@ public class TaskFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         description = view.findViewById(R.id.task_description);
         volunteerNumber = view.findViewById(R.id.task_volunteerNumber);

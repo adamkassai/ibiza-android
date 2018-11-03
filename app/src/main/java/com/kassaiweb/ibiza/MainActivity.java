@@ -31,6 +31,7 @@ import com.google.android.gms.location.places.Places;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.kassaiweb.ibiza.Connection.NetworkChangeReceiver;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
+import com.kassaiweb.ibiza.Group.GroupChooserActivity;
 import com.kassaiweb.ibiza.Notification.NotificationFragment;
 import com.kassaiweb.ibiza.Place.PlacesFragment;
 import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private ImageView headerProfilePic;
     private TextView headerName;
+    private TextView headerGroup;
 
     private DrawerLayout drawer;
     private NavigationView navigationView;
@@ -86,6 +88,7 @@ public class MainActivity extends AppCompatActivity implements
 
         headerProfilePic = navigationView.getHeaderView(0).findViewById(R.id.nav_header_image);
         headerName = navigationView.getHeaderView(0).findViewById(R.id.nav_header_name);
+        headerGroup = navigationView.getHeaderView(0).findViewById(R.id.nav_header_group);
 
         snackbar = Snackbar.make(findViewById(android.R.id.content),
                 getResources().getString(R.string.internet_connection_error),
@@ -119,16 +122,16 @@ public class MainActivity extends AppCompatActivity implements
     public void onResume() {
         super.onResume();
 
-        if (SPUtil.getString(Constant.USERNAME, null) == null) {
-            // getting the user's data from facebook
+        if (SPUtil.getString(Constant.ACCOUNT_NAME, null) == null) {
+            // getting the user's data from facebook at the first time
             GraphRequest request = GraphRequest.newMeRequest(
                     AccessToken.getCurrentAccessToken(),
                     new GraphRequest.GraphJSONObjectCallback() {
                         @Override
                         public void onCompleted(JSONObject object, GraphResponse response) {
                             try {
-                                SPUtil.putString(Constant.USERNAME, object.getString("name"));
-                                SPUtil.putString(Constant.USER_IMAGE, object.getJSONObject("picture").getJSONObject("data").getString("url"));
+                                SPUtil.putString(Constant.ACCOUNT_NAME, object.getString("name"));
+                                SPUtil.putString(Constant.ACCOUNT_IMAGE_URL, object.getJSONObject("picture").getJSONObject("data").getString("url"));
                                 fillHeader();
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -153,8 +156,9 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     private void fillHeader() {
-        ImageLoader.getInstance().displayImage(SPUtil.getString(Constant.USER_IMAGE, ""), headerProfilePic);
-        headerName.setText(SPUtil.getString(Constant.USERNAME, ""));
+        ImageLoader.getInstance().displayImage(SPUtil.getString(Constant.ACCOUNT_IMAGE_URL, ""), headerProfilePic);
+        headerName.setText(SPUtil.getString(Constant.ACCOUNT_NAME, ""));
+        headerGroup.setText(SPUtil.getString(Constant.CURRENT_GROUP_NAME, ""));
     }
 
     @Override
@@ -192,6 +196,25 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new NotificationFragment());
                 break;
+            case R.id.action_invite:
+                getSupportActionBar().setTitle(item.getTitle());
+                replaceFragment(new BarcodeFragment());
+                break;
+            case R.id.action_change_group:
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Biztosan csoportot szeretnél váltani?")
+                        .setPositiveButton("Igen", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                startActivity(new Intent(MainActivity.this, GroupChooserActivity.class));
+                                SPUtil.putString(Constant.CURRENT_GROUP_ID, null);
+                                SPUtil.putString(Constant.CURRENT_GROUP_NAME, null);
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("Nem", null)
+                        .show();
+                break;
             case R.id.action_logout:
                 new AlertDialog.Builder(MainActivity.this)
                         .setTitle("Biztosan kijelentkezel?")
@@ -200,8 +223,11 @@ public class MainActivity extends AppCompatActivity implements
                             public void onClick(DialogInterface dialog, int which) {
                                 LoginManager.getInstance().logOut();
                                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                                SPUtil.putString(Constant.USERNAME, null);
-                                SPUtil.putString(Constant.USER_IMAGE, null);
+                                SPUtil.putString(Constant.ACCOUNT_ID, null);
+                                SPUtil.putString(Constant.ACCOUNT_NAME, null);
+                                SPUtil.putString(Constant.ACCOUNT_IMAGE_URL, null);
+                                SPUtil.putString(Constant.CURRENT_GROUP_ID, null);
+                                SPUtil.putString(Constant.CURRENT_GROUP_NAME, null);
                                 finish();
                             }
                         })

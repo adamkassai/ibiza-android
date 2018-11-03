@@ -46,7 +46,7 @@ public class PollCreateFragment extends Fragment {
 
         view.findViewById(R.id.progress).setVisibility(View.GONE);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         final TextView questionTextView = view.findViewById(R.id.poll_question);
         final TextView optionTextView = view.findViewById(R.id.poll_option);

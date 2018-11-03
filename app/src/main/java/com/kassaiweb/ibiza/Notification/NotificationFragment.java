@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.R;
-import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Data.User;
 import com.kassaiweb.ibiza.Util.NotificationUtil;
 import com.kassaiweb.ibiza.Util.SPUtil;
 
@@ -45,7 +45,7 @@ public class NotificationFragment extends Fragment {
         send = view.findViewById(R.id.notification_send);
         anonim = view.findViewById(R.id.notification_anonim);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef = database.getReference("users").child(userId);

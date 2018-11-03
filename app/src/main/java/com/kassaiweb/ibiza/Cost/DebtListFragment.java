@@ -37,7 +37,7 @@ public class DebtListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         mAdapter = new DebtAdapter(getActivity());
         mRecyclerView.setAdapter(mAdapter);

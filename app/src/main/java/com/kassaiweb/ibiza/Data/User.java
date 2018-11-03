@@ -1,4 +1,4 @@
-package com.kassaiweb.ibiza.User;
+package com.kassaiweb.ibiza.Data;
 
 public class User {
 

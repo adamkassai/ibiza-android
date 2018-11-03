@@ -45,6 +45,14 @@
         android:title="Értesítés küldése" />
 
     <item
+        android:id="@+id/action_invite"
+        android:title="Meghívás a csoportba" />
+
+    <item
+        android:id="@+id/action_change_group"
+        android:title="Csoport váltás" />
+
+    <item
         android:id="@+id/action_logout"
         android:title="@string/logout" />
 

@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.kassaiweb.ibiza.User.User;
+import com.kassaiweb.ibiza.Data.User;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;

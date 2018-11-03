@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -25,7 +24,6 @@ import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
 import com.kassaiweb.ibiza.Task.Task;
 import com.kassaiweb.ibiza.Task.TaskListFragment;
 import com.kassaiweb.ibiza.Util.SPUtil;
-import com.nostra13.universalimageloader.core.ImageLoader;
 
 public class FrontPageFragment extends Fragment {
 
@@ -45,7 +43,7 @@ public class FrontPageFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        userId = SPUtil.getString(Constant.USERID, null);
+        userId = SPUtil.getString(Constant.USER_ID, null);
 
         view.findViewById(R.id.front_cost_box).setOnClickListener(new View.OnClickListener() {
             @Override

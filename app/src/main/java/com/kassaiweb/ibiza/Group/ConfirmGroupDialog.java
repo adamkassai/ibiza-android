@@ -10,14 +10,10 @@ import android.widget.TextView;
 
 import com.kassaiweb.ibiza.Data.Group;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.EncryptUtil;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class ConfirmGroupDialog extends Dialog {
-
-    public interface ConfirmGroupListener {
-        void onGroupConfirmed(String groupId);
-
-        void onGroupConfirmError(String errorMsg);
-    }
 
     private TextView tvTitle;
     private EditText etPassword;
@@ -25,9 +21,9 @@ public class ConfirmGroupDialog extends Dialog {
 
     private Group group;
 
-    private ConfirmGroupListener listener;
+    private JoinGroupDialog.JoinGroupListener listener;
 
-    public ConfirmGroupDialog(@NonNull Context context, Group group, ConfirmGroupListener listener) {
+    public ConfirmGroupDialog(@NonNull Context context, Group group, JoinGroupDialog.JoinGroupListener listener) {
         super(context);
         this.group = group;
         this.listener = listener;
@@ -47,11 +43,7 @@ public class ConfirmGroupDialog extends Dialog {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (group != null && etPassword.getText().toString().equals(group.getPassword())) {
-                    listener.onGroupConfirmed(group.getGroupKey());
-                } else {
-                    listener.onGroupConfirmError("The password is not correct!");
-                }
+                listener.joinGroup(group.getGroupKey(), etPassword.getText().toString());
             }
         });
     }

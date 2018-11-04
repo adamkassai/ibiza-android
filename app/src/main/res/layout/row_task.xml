@@ -1,80 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
-    android:layout_marginStart="10dp"
-    android:layout_marginEnd="10dp"
-    android:layout_marginTop="10dp"
-    android:id="@+id/task_main_layout">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/group_chooser"
+    android:layout_height="wrap_content">
 
-    <LinearLayout
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/row_task_creator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@mipmap/ic_launcher" />
+
+    <TextView
+        android:id="@+id/row_task_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/row_task_priority"
+        app:layout_constraintStart_toEndOf="@+id/row_task_creator"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Bevásárlás" />
 
-        <TextView
-            android:id="@+id/task_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="bold"
-            android:textSize="18sp"
-            android:text="Feladat leírása"/>
-
-        <TextView
-            android:id="@+id/task_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dátum"/>
-
-        <TextView
-            android:id="@+id/task_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textStyle="italic"
-            android:text="Dátum"/>
-
-        <HorizontalScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:scrollbars="none">
-            <LinearLayout
-                android:id="@+id/task_volunteers_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/row_task_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/row_task_priority"
+        app:layout_constraintStart_toEndOf="@+id/row_task_creator"
+        app:layout_constraintTop_toBottomOf="@+id/row_task_name"
+        tools:text="Venni köll sört!" />
 
     <ImageView
-        android:id="@+id/task_close_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/baseline_check_circle_outline_black_36"
-        android:visibility="gone"/>
+        android:id="@+id/row_task_priority"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:layout_constraintEnd_toStartOf="@+id/row_task_done"
+        app:layout_constraintTop_toTopOf="@+id/row_task_done"
+        tools:src="@drawable/yellow" />
 
     <ImageView
-        android:id="@+id/task_delete_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:src="@drawable/baseline_delete_black_36"
-        android:visibility="gone"/>
+        android:id="@+id/row_task_done"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:padding="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="w,1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/baseline_check_circle_black_36" />
 
-    <Button
-        android:id="@+id/task_apply_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:text="@string/apply"/>
-
-
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

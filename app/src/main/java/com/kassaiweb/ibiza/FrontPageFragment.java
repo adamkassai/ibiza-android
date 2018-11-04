@@ -98,7 +98,7 @@ public class FrontPageFragment extends Fragment {
         });
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tasksRef = database.getReference("tasks");
+        /*DatabaseReference tasksRef = database.getReference("tasks");
         tasksRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -117,7 +117,7 @@ public class FrontPageFragment extends Fragment {
                 // Failed to read value
                 Log.w("Task", "Failed to read value.", error.toException());
             }
-        });
+        });*/
 
         DatabaseReference pollsRef = database.getReference("polls");
         pollsRef.addValueEventListener(new ValueEventListener() {

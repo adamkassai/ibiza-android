@@ -38,9 +38,5 @@ public class Constant {
     public static final String CHOICE_SINGLE = "single";
     public static final String CHOICE_MULTIPLE = "multiple";
 
-    public static final String TASK_ASSIGNED = "assigned";
-    public static final String TASK_VOLUNTEERS = "volunteers";
-    public static final String TASK_RANDOM = "random";
-
     public static final String GOOGLE_PLACES_API_KEY = "AIzaSyDUCMcDzJt7jRg_jfVJdmszlMaUcYrBTFI";
 }

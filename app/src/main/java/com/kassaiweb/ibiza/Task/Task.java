@@ -1,37 +1,60 @@
 package com.kassaiweb.ibiza.Task;
 
-import java.util.ArrayList;
-import java.util.Date;
+import com.google.firebase.database.Exclude;
+
+import java.util.List;
 
 public class Task {
 
-    private String id;
+    private String firebaseId;
+    private String groupId;
+    private String name;
     private String description;
+    /**
+     * fireabse Id of the creator
+     */
     private String creatorId;
-    private Date date;
-    private int volunteerNumber;
-    private ArrayList<String> volunteers = new ArrayList<>();
+    /**
+     * Date
+     */
+    private String createdAt;
+    /**
+     * Date
+     */
+    private String deadline;
     private boolean ready = false;
-    private Date deadline;
-    private String type;
+    /**
+     * [1-5] 1 is not important, 5 is very important
+     */
+    private int priority;
+    private List<String> participants;
 
     public Task() {
     }
 
-    public Task(String id, String description, String creatorId, int volunteerNumber) {
-        this.id = id;
-        this.description = description;
-        this.creatorId = creatorId;
-        this.volunteerNumber = volunteerNumber;
-        this.date = new Date();
+    @Exclude
+    public String getFirebaseId() {
+        return firebaseId;
     }
 
-    public String getId() {
-        return id;
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDescription() {
@@ -50,28 +73,20 @@ public class Task {
         this.creatorId = creatorId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCreatedAt() {
+        return createdAt;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
-    public int getVolunteerNumber() {
-        return volunteerNumber;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setVolunteerNumber(int volunteerNumber) {
-        this.volunteerNumber = volunteerNumber;
-    }
-
-    public ArrayList<String> getVolunteers() {
-        return volunteers;
-    }
-
-    public void setVolunteers(ArrayList<String> volunteers) {
-        this.volunteers = volunteers;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 
     public boolean isReady() {
@@ -82,19 +97,19 @@ public class Task {
         this.ready = ready;
     }
 
-    public Date getDeadline() {
-        return deadline;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setDeadline(Date deadline) {
-        this.deadline = deadline;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
-    public String getType() {
-        return type;
+    public List<String> getParticipants() {
+        return participants;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
     }
 }

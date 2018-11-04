@@ -1,11 +1,14 @@
 package com.kassaiweb.ibiza.Data;
 
+import com.google.firebase.database.Exclude;
+
 public class FbUser {
 
     private String id;
     private String token;
     private String imageUrl;
     private String name;
+    private String firebaseId;
 
     public FbUser() {
     }
@@ -47,5 +50,14 @@ public class FbUser {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Exclude
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 }

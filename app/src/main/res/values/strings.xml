@@ -55,10 +55,12 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="welcome_xy">Üdv, %1$s!</string>
 
-    <string name="scanner_hint">Scan a barcode from a member of the group!</string>
+    <string name="scanner_hint">Olvass be egy QR kódot a csapat egyik résztvevőjétől!</string>
     <string name="group_connection_error_msg">Valami probléma adódott az azonosítás során! Próbáld újra később!</string>
     <string name="group_connection_qr_error_msg">A beszkennelt QR code nem érvényes!</string>
     <string name="connect_to_group">Csatlakozás a(z) %1$s csoporthoz</string>
     <string name="password">jelszó</string>
     <string name="check">Ellenőriz</string>
+    <string name="set_deadline">Határidő beállítása</string>
+
 </resources>

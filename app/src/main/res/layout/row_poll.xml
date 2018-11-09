@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/group_chooser"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/row_poll_creator"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/green" />
+
+    <TextView
+        android:id="@+id/row_poll_name"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxLines="2"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/row_poll_creator"
+        app:layout_constraintEnd_toStartOf="@+id/row_poll_participants"
+        app:layout_constraintStart_toEndOf="@+id/row_poll_creator"
+        app:layout_constraintTop_toTopOf="@+id/row_poll_creator"
+        tools:text="Kapjon e Lajos ma vacsorát?" />
+
+    <TextView
+        android:id="@+id/row_poll_participants"
+        android:layout_width="75dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="@+id/row_poll_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/row_poll_name"
+        tools:text="41/100" />
+
+</android.support.constraint.ConstraintLayout>

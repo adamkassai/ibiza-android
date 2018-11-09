@@ -1,6 +1,7 @@
 package com.kassaiweb.ibiza.Poll;
 
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,12 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.MainActivity;
 import com.kassaiweb.ibiza.R;
@@ -26,104 +26,101 @@ import java.util.ArrayList;
 
 public class PollCreateFragment extends Fragment {
 
-    private Gson gson = new Gson();
+    private ProgressBar progressBar;
+    private TextView tvQuestion;
+    private TextView tvOption;
+    private ImageView btnAddOption;
+    private CheckBox cbMultiple;
+    private CheckBox cbPublic;
+    private Button btnCreate;
+
     private ArrayList<Answer> answers = new ArrayList<>();
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private String userId;
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
+    private String currentUserId;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.fragment_poll_create, container, false);
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        progressBar = view.findViewById(R.id.progress);
+        progressBar.setVisibility(View.GONE);
 
-        view.findViewById(R.id.progress).setVisibility(View.GONE);
+        currentUserId = SPUtil.getString(Constant.CURRENT_USER_ID, null);
 
-        userId = SPUtil.getString(Constant.USER_ID, null);
+        tvQuestion = view.findViewById(R.id.poll_question);
+        tvOption = view.findViewById(R.id.poll_option);
+        btnAddOption = view.findViewById(R.id.poll_add_option);
+        cbMultiple = view.findViewById(R.id.poll_multiple);
+        cbPublic = view.findViewById(R.id.poll_public);
+        btnCreate = view.findViewById(R.id.poll_save);
 
-        final TextView questionTextView = view.findViewById(R.id.poll_question);
-        final TextView optionTextView = view.findViewById(R.id.poll_option);
-        ImageView addOptionButton = view.findViewById(R.id.poll_add_option);
-        final CheckBox multipleCheckbox = view.findViewById(R.id.poll_multiple);
-        final CheckBox publicCheckbox = view.findViewById(R.id.poll_public);
-        Button createButton = view.findViewById(R.id.poll_save);
-
-        addOptionButton.setOnClickListener(new View.OnClickListener() {
+        btnAddOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (optionTextView.getText()!=null && !optionTextView.getText().toString().equals("")) {
-
-                    answers.add(new Answer(optionTextView.getText().toString()));
-                    mAdapter.notifyDataSetChanged();
-                    optionTextView.setText("");
-
+                if (tvOption.getText() != null && !tvOption.getText().toString().isEmpty()) {
+                    answers.add(new Answer(tvOption.getText().toString()));
+                    adapter.notifyItemInserted(answers.size() - 1);
+                    tvOption.setText("");
                 }
             }
         });
 
-        createButton.setOnClickListener(new View.OnClickListener() {
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (questionTextView.getText()==null || questionTextView.getText().toString().equals("")) {
-                    Toast.makeText(getContext(), "Kérdés megadása kötelező", Toast.LENGTH_LONG).show();
+                if (tvQuestion.getText() == null || tvQuestion.getText().toString().isEmpty()) {
+                    Snackbar.make(getActivity().findViewById(android.R.id.content),
+                            "Kérdés megadása kötelező", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
-                if (answers.size()==0) {
-                    Toast.makeText(getContext(), "Legalább egy válaszlehetőség megadása kötelező", Toast.LENGTH_LONG).show();
+                if (answers.isEmpty()) {
+                    Snackbar.make(getActivity().findViewById(android.R.id.content),
+                            "Legalább egy válaszlehetőség megadása kötelező", Snackbar.LENGTH_LONG).show();
                     return;
                 }
 
                 String choice;
-                if (multipleCheckbox.isChecked()) {
-                    choice=Constant.CHOICE_MULTIPLE;
-                }else{
-                    choice=Constant.CHOICE_SINGLE;
+                if (cbMultiple.isChecked()) {
+                    choice = Constant.CHOICE_MULTIPLE;
+                } else {
+                    choice = Constant.CHOICE_SINGLE;
                 }
 
                 boolean publicResult;
-                if (publicCheckbox.isChecked()) {
-                    publicResult=true;
-                }else{
-                    publicResult=false;
+                if (cbPublic.isChecked()) {
+                    publicResult = true;
+                } else {
+                    publicResult = false;
                 }
 
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference newPollRef = database.getReference("polls").push();
 
-                Poll newPoll = new Poll(newPollRef.getKey(), questionTextView.getText().toString(), choice, answers, publicResult, userId);
+                String groupId = SPUtil.getString(Constant.CURRENT_GROUP_ID, "");
+                Poll newPoll = new Poll(newPollRef.getKey(), groupId,
+                        tvQuestion.getText().toString(), choice, answers, publicResult, currentUserId);
                 newPollRef.setValue(newPoll);
 
-                MainActivity activity = (MainActivity)getActivity();
-                NotificationUtil.sendNotification("Új szavazás", newPoll.getQuestion(), userId);
-                activity.replaceFragment(new PollsPagerFragment());
-
+                MainActivity activity = (MainActivity) getActivity();
+                NotificationUtil.sendNotification("Új szavazás", newPoll.getQuestion(), currentUserId);
+                activity.replaceFragment(new PollsListFragment());
             }
         });
 
+        recyclerView = view.findViewById(R.id.poll_options_recycler_view);
+        recyclerView.setHasFixedSize(false);
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(layoutManager);
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.poll_options_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        mAdapter = new PollOptionsAdapter(answers, "");
-        mRecyclerView.setAdapter(mAdapter);
-
-
-
+        adapter = new PollOptionsAdapter(answers);
+        recyclerView.setAdapter(adapter);
     }
-
-
 }

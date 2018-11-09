@@ -220,7 +220,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
                             DatabaseReference newGroupMemberRef =
                                     database.getReference("groups").child(groupId).child("members").push();
 
-                            GroupMember newGroupMember = new GroupMember(0, currentUserId);
+                            GroupMember newGroupMember = new GroupMember(0, currentUserId, newGroupMemberRef.getKey());
                             newGroupMemberRef.setValue(newGroupMember);
 
                             database.getReference("groups").child(groupId)

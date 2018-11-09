@@ -5,7 +5,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/poll_question"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Mit kap Lajos vacsorára?" />
+
+    <TextView
+        android:id="@+id/poll_multiple"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="6dp"
+        android:text="@string/multiple_choice"
+        android:textAlignment="center"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/poll_question"
+        tools:visibility="visible" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/poll_options_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/poll_send"
+        app:layout_constraintTop_toBottomOf="@+id/poll_multiple" />
+
+    <Button
+        android:id="@+id/poll_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/send"
+        app:layout_constraintBottom_toTopOf="@+id/poll_close"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/poll_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/poll_remove"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/close_poll"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/poll_remove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/remove_poll"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
+
+    <!--<LinearLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -33,7 +102,8 @@
             android:layout_marginBottom="10dp"
             android:text="@string/multiple_choice"
             android:textAlignment="center"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:visibility="visible" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/poll_options_recycler_view"
@@ -57,7 +127,8 @@
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:visibility="gone"
-            tools:text="@string/close_poll" />
+            tools:text="@string/close_poll"
+            tools:visibility="visible" />
 
         <Button
             android:id="@+id/poll_remove"
@@ -67,20 +138,9 @@
             android:layout_marginEnd="30dp"
             android:layout_marginStart="30dp"
             android:text="@string/remove_poll"
-            android:visibility="gone" />
-    </LinearLayout>
-
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/poll_fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/baseline_add_white_24"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+            android:visibility="gone"
+            tools:visibility="visible" />
+    </LinearLayout>-->
 
 
 </android.support.constraint.ConstraintLayout>

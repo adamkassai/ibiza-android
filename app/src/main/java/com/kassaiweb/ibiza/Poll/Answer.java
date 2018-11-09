@@ -1,5 +1,7 @@
 package com.kassaiweb.ibiza.Poll;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.HashMap;
 
 public class Answer {
@@ -34,20 +36,21 @@ public class Answer {
         return votes.containsKey(userID) && votes.get(userID);
     }
 
-    public void setSelected(String userID, boolean selected)
-    {
+    public void setSelected(String userID, boolean selected) {
         if (selected) {
             votes.put(userID, true);
-        }else {
+        } else {
             votes.put(userID, false);
         }
     }
 
+    @Exclude
     public int getVotesNumber() {
-        int votesNumber=0;
-        for (Boolean vote : votes.values())
-        {
-            if (vote) { votesNumber++; }
+        int votesNumber = 0;
+        for (Boolean vote : votes.values()) {
+            if (vote) {
+                votesNumber++;
+            }
         }
         return votesNumber;
     }

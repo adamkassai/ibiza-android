@@ -97,4 +97,23 @@ public class DateUtil {
                 .append(minute);
         return builder.toString();
     }
+
+    /**
+     * @return a String with a format of '2018-09-03'
+     */
+    public static String formatDay(Calendar calendar) {
+        String month, dayOfMonth;
+        int iMonth = calendar.get(Calendar.MONTH) + 1;
+        month = iMonth > 9 ? String.valueOf(iMonth) : '0' + String.valueOf(iMonth);
+        int iDayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        dayOfMonth = iDayOfMonth > 9 ? String.valueOf(iDayOfMonth) : '0' + String.valueOf(iDayOfMonth);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(calendar.get(Calendar.YEAR))
+                .append("-")
+                .append(month)
+                .append("-")
+                .append(dayOfMonth);
+        return builder.toString();
+    }
 }

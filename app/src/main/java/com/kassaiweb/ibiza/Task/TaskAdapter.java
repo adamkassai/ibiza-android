@@ -28,7 +28,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     }
 
     private List<Task> tasks;
-
     private TaskAdapterListener listener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

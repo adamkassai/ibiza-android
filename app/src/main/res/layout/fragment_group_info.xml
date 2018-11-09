@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GroupInfo.GroupInfoFragment">
+
+    <ImageView
+        android:id="@+id/group_info_mini_barcode"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/qr_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/group_info_created_at"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/group_info_mini_barcode"
+        tools:text="Csoport létrehozásának dátuma: 2018-09-03" />
+
+    <TextView
+        android:id="@+id/group_info_members_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Tagok"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/group_info_created_at" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/group_info_members"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/group_info_members_title" />
+
+</android.support.constraint.ConstraintLayout>

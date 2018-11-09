@@ -71,7 +71,8 @@ public class CreateGroupDialog extends Dialog {
                         .child(newGroupRef.getKey()).child("members").push();
                 GroupMember newGroupMember = new GroupMember(
                         0,
-                        firebaseUserId
+                        firebaseUserId,
+                        newGroupMemberRef.getKey()
                 );
                 newGroupMemberRef.setValue(newGroupMember);
 

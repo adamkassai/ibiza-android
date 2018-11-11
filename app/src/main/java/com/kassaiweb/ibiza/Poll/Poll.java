@@ -1,10 +1,13 @@
 package com.kassaiweb.ibiza.Poll;
 
+import com.google.firebase.database.Exclude;
+
 import java.util.ArrayList;
 
 public class Poll {
 
-    private String id;
+    private String firebaseId;
+    private String groupId;
     private String question;
     private String choice;
     private ArrayList<Answer> answers = new ArrayList<>();
@@ -15,14 +18,32 @@ public class Poll {
     public Poll() {
     }
 
-    public Poll(String id, String question, String choice, ArrayList<Answer> answers, boolean publicResult, String creatorId) {
-        this.id = id;
+    public Poll(String firebaseId, String groupId, String question, String choice, ArrayList<Answer> answers, boolean publicResult, String creatorId) {
+        this.firebaseId = firebaseId;
+        this.groupId = groupId;
         this.question = question;
         this.choice = choice;
         this.answers = answers;
         this.publicResult = publicResult;
         this.creatorId = creatorId;
-        this.closed=false;
+        this.closed = false;
+    }
+
+    @Exclude
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getCreatorId() {
@@ -31,14 +52,6 @@ public class Poll {
 
     public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getQuestion() {
@@ -65,13 +78,14 @@ public class Poll {
         this.answers = answers;
     }
 
+    @Exclude
     public int getVotesNumber() {
-        int votesNumber=0;
-        for (Answer answer : answers)
-        {
-            for (Boolean vote : answer.getVotes().values())
-            {
-                if (vote) { votesNumber++; }
+        int votesNumber = 0;
+        for (Answer answer : answers) {
+            for (Boolean vote : answer.getVotes().values()) {
+                if (vote) {
+                    votesNumber++;
+                }
             }
         }
 

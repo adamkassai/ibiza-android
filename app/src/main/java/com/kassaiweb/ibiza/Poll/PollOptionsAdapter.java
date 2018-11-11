@@ -5,12 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.kassaiweb.ibiza.Constant;
 import com.kassaiweb.ibiza.R;
+import com.kassaiweb.ibiza.Util.SPUtil;
 
 import java.util.ArrayList;
 
@@ -20,9 +23,8 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
     private ArrayList<Answer> answers;
     private RadioButton lastChecked = null;
     private int lastCheckedPos = 0;
-    private String userId;
     private ArrayList<Boolean> selections = new ArrayList<>();
-    private int totalVotes=0;
+    private int totalVotes = 0;
 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -30,8 +32,8 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
         public TextView answerTextView;
         public RadioButton answerRadioButton;
         public CheckBox answerCheckBox;
-        public View resultView;
-        public View resultInvertView;
+        public ProgressBar result;
+        public ImageView removeButton;
         public TextView voteNumberTextView;
 
         public ViewHolder(View v) {
@@ -39,32 +41,27 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
             answerTextView = v.findViewById(R.id.poll_answer);
             answerRadioButton = v.findViewById(R.id.poll_radioButton);
             answerCheckBox = v.findViewById(R.id.poll_checkBox);
-            resultView = v.findViewById(R.id.poll_result);
-            resultInvertView = v.findViewById(R.id.poll_result_invert);
+            result = v.findViewById(R.id.poll_result);
+            removeButton = v.findViewById(R.id.poll_remove);
             voteNumberTextView = v.findViewById(R.id.poll_number);
         }
     }
 
 
-    public PollOptionsAdapter(Poll poll, String userId) {
+    public PollOptionsAdapter(Poll poll) {
         this.answers = poll.getAnswers();
         this.poll = poll;
-        this.userId = userId;
 
-        for (int i=0; i<answers.size(); i++)
-        {
+        String userId = SPUtil.getString(Constant.CURRENT_USER_ID, null);
+        for (int i = 0; i < answers.size(); i++) {
             selections.add(answers.get(i).isSelected(userId));
-            totalVotes+=answers.get(i).getVotesNumber();
+            totalVotes += answers.get(i).getVotesNumber();
         }
-
     }
 
-    public PollOptionsAdapter(ArrayList<Answer> answers, String userId) {
+    public PollOptionsAdapter(ArrayList<Answer> answers) {
         this.answers = answers;
         this.poll = new Poll();
-        this.userId = userId;
-
-
     }
 
 
@@ -78,37 +75,27 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
 
         holder.answerTextView.setText(answers.get(position).getAnswer());
 
-        if (poll.isPublicResult() || (poll.getCreatorId()!=null && poll.getCreatorId().equals(userId))) {
+        String userId = SPUtil.getString(Constant.CURRENT_USER_ID, null);
+        if (poll.isPublicResult() || (poll.getCreatorId() != null && poll.getCreatorId().equals(userId))) {
 
             if (answers.get(position).getVotesNumber() > 0) {
                 holder.voteNumberTextView.setText(Integer.toString(answers.get(position).getVotesNumber()));
             }
 
-            float result;
-            if (totalVotes != 0) {
-                result = (float) answers.get(position).getVotesNumber() / totalVotes;
-            } else {
-                result = 0;
-            }
+            holder.result.setMax(totalVotes);
+            holder.result.setProgress(answers.get(position).getVotesNumber());
 
-            holder.resultView.setLayoutParams(new LinearLayout.LayoutParams(0, 10,
-                    result));
-
-            holder.resultInvertView.setLayoutParams(new LinearLayout.LayoutParams(0, 0,
-                    1 - result));
-
-        }else{
-            holder.resultView.setVisibility(View.GONE);
-            holder.resultInvertView.setVisibility(View.GONE);
+        } else {
+            holder.result.setVisibility(View.GONE);
             holder.voteNumberTextView.setVisibility(View.GONE);
         }
 
 
-        if (poll.getChoice()!=null && poll.getChoice().equals(Constant.CHOICE_SINGLE)) {
+        if (poll.getChoice() != null && poll.getChoice().equals(Constant.CHOICE_SINGLE)) {
 
             holder.answerRadioButton.setVisibility(View.VISIBLE);
             holder.answerRadioButton.setTag(position);
@@ -152,7 +139,7 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
 
         }
 
-        if (poll.getChoice()!=null && poll.getChoice().equals(Constant.CHOICE_MULTIPLE)) {
+        if (poll.getChoice() != null && poll.getChoice().equals(Constant.CHOICE_MULTIPLE)) {
 
             holder.answerCheckBox.setVisibility(View.VISIBLE);
             holder.answerCheckBox.setTag(position);
@@ -174,8 +161,19 @@ public class PollOptionsAdapter extends RecyclerView.Adapter<PollOptionsAdapter.
 
         }
 
-        if (poll.isClosed())
-        {
+        if (poll.getChoice() == null) {
+            // ekkor van a létrehozás
+            holder.removeButton.setVisibility(View.VISIBLE);
+            holder.removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    answers.remove(answers.get(position));
+                    notifyDataSetChanged();
+                }
+            });
+        }
+
+        if (poll.isClosed()) {
             holder.answerCheckBox.setClickable(false);
             holder.answerCheckBox.setFocusable(false);
             holder.answerRadioButton.setClickable(false);

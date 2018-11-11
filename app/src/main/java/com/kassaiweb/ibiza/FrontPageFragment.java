@@ -27,119 +27,11 @@ import com.kassaiweb.ibiza.Util.SPUtil;
 
 public class FrontPageFragment extends Fragment {
 
-    private News news;
-    private Gson gson = new Gson();
-
-    private LinearLayout taskBox;
-    private LinearLayout pollBox;
-    private String userId;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         return inflater.inflate(R.layout.fragment_front_page, container, false);
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        userId = SPUtil.getString(Constant.USER_ID, null);
-
-        view.findViewById(R.id.front_cost_box).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new CostPagerFragment());
-            }
-        });
-
-        view.findViewById(R.id.front_places_box).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new PlacesFragment());
-            }
-        });
-
-        view.findViewById(R.id.front_random_box).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new PickOneFragment());
-            }
-        });
-
-        view.findViewById(R.id.front_notification_box).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new NotificationFragment());
-            }
-        });
-
-        pollBox = view.findViewById(R.id.front_poll_box);
-
-        pollBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new PollsPagerFragment());
-            }
-        });
-
-        taskBox = view.findViewById(R.id.front_task_box);
-
-        taskBox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MainActivity activity = (MainActivity)getActivity();
-                activity.replaceFragment(new TaskListFragment());
-            }
-        });
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference tasksRef = database.getReference("tasks");
-        tasksRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot taskDataSnapshot : dataSnapshot.getChildren()) {
-                    Task task = taskDataSnapshot.getValue(Task.class);
-                    if (!task.isReady() && (task.getVolunteers().contains(userId) || task.getType().equals(Constant.TASK_VOLUNTEERS))) {
-                        taskBox.setVisibility(View.VISIBLE);
-                        ((TextView)taskBox.findViewById(R.id.front_task_text)).setText(task.getDescription());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Task", "Failed to read value.", error.toException());
-            }
-        });
-
-        DatabaseReference pollsRef = database.getReference("polls");
-        pollsRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot pollDataSnapshot : dataSnapshot.getChildren()) {
-                    Poll poll = pollDataSnapshot.getValue(Poll.class);
-                    if (!poll.isClosed()) {
-                        pollBox.setVisibility(View.VISIBLE);
-                        ((TextView)pollBox.findViewById(R.id.front_poll_text)).setText(poll.getQuestion());
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w("Task", "Failed to read value.", error.toException());
-            }
-        });
-
     }
 
 }

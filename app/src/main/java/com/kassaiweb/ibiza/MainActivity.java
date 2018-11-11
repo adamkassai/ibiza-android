@@ -32,11 +32,15 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.kassaiweb.ibiza.Connection.NetworkChangeReceiver;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
 import com.kassaiweb.ibiza.Group.GroupChooserActivity;
+import com.kassaiweb.ibiza.GroupInfo.GroupInfoFragment;
 import com.kassaiweb.ibiza.Notification.NotificationFragment;
 import com.kassaiweb.ibiza.Place.PlacesFragment;
-import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
+import com.kassaiweb.ibiza.Poll.PollCreateFragment;
+import com.kassaiweb.ibiza.Poll.PollFragment;
+import com.kassaiweb.ibiza.Poll.PollsListFragment;
+import com.kassaiweb.ibiza.Task.TaskInfoFragment;
 import com.kassaiweb.ibiza.Task.TaskListFragment;
-import com.kassaiweb.ibiza.Util.ConnectionUtil;
+import com.kassaiweb.ibiza.Util.NetworkUtil;
 import com.kassaiweb.ibiza.Util.SPUtil;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private OkHttpClient client = new OkHttpClient();
+
+    private Fragment currentFragment;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -145,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements
             request.executeAsync();
         } else {
             fillHeader();
-            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_front));
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
         }
     }
 
@@ -178,16 +184,13 @@ public class MainActivity extends AppCompatActivity implements
                 break;
             case R.id.action_poll:
                 getSupportActionBar().setTitle(item.getTitle());
-                replaceFragment(new PollsPagerFragment());
+                // replaceFragment(new PollsPagerFragment());
+                replaceFragment(new PollsListFragment());
                 break;
-            case R.id.action_random:
-                getSupportActionBar().setTitle(item.getTitle());
-                replaceFragment(new PickOneFragment());
-                break;
-            case R.id.action_places:
+            /*case R.id.action_places:
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new PlacesFragment());
-                break;
+                break;*/
             case R.id.action_shopping:
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new ShoppingListFragment());
@@ -196,9 +199,9 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new NotificationFragment());
                 break;
-            case R.id.action_invite:
+            case R.id.action_group_info:
                 getSupportActionBar().setTitle(item.getTitle());
-                replaceFragment(new BarcodeFragment());
+                replaceFragment(new GroupInfoFragment());
                 break;
             case R.id.action_change_group:
                 new AlertDialog.Builder(MainActivity.this)
@@ -249,6 +252,8 @@ public class MainActivity extends AppCompatActivity implements
     public void networkChanged(boolean isConnected) {
         if (isConnected) {
             snackbar.dismiss();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.logged_in_main_fragment, currentFragment).commit();
         }
     }
 
@@ -310,9 +315,10 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     public void replaceFragment(final Fragment fragment) {
-        if (ConnectionUtil.isNetworkAvailable()) {
+        currentFragment = fragment;
+        if (NetworkUtil.isConnected(MainActivity.this)) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.logged_in_main_fragment, fragment).commit();
+            ft.replace(R.id.logged_in_main_fragment, currentFragment).commit();
         } else {
             snackbar.show();
         }
@@ -322,8 +328,14 @@ public class MainActivity extends AppCompatActivity implements
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        } else if (!(getSupportFragmentManager().findFragmentById(R.id.logged_in_main_fragment)
-                instanceof FrontPageFragment)) {
+        } else if (currentFragment instanceof TaskInfoFragment) {
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_tasks));
+        } else if ((currentFragment instanceof PollCreateFragment)) {
+            // TODO: megerősítő dialógus?
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
+        } else if((currentFragment instanceof PollFragment)) {
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
+        } else if (!(currentFragment instanceof FrontPageFragment)) {
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_front));
         } else {
             super.onBackPressed();

@@ -94,7 +94,7 @@ public class PollsPagerFragment extends Fragment {
 
             Fragment f = new PollFragment();
             Bundle args = new Bundle();
-            args.putString("pollId", polls.get(polls.size() - 1 - position).getId());
+            args.putString("pollId", polls.get(polls.size() - 1 - position).getFirebaseId());
             f.setArguments(args);
             return f;
         }

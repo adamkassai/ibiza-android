@@ -34,9 +34,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GroupChooserActivity extends AppCompatActivity implements
-        CreateGroupDialog.CreateGroupListener,
-        GroupAdapter.GroupAdapterListener,
-        ConfirmGroupDialog.ConfirmGroupListener {
+        CreateGroupDialog.CreateGroupListener, GroupAdapter.GroupAdapterListener,
+        JoinGroupDialog.JoinGroupListener {
 
     private static final String TAG = GroupChooserActivity.class.getSimpleName();
     private TextView tvWelcome;
@@ -44,6 +43,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
     private RecyclerView recyclerView;
     private TextView tvMakeNew;
     private TextView tvConnectToOther;
+    private TextView tvJoinById;
     private ProgressBar progress;
 
     private GroupAdapter adapter;
@@ -51,6 +51,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
 
     private CreateGroupDialog createGroupDialog;
     private ConfirmGroupDialog confirmGroupDialog;
+    private JoinGroupDialog joinGroupDialog;
 
     private FirebaseDatabase database;
 
@@ -72,6 +73,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
 
         tvMakeNew = findViewById(R.id.group_chooser_make_new);
         tvConnectToOther = findViewById(R.id.group_chooser_connect_to_other);
+        tvJoinById = findViewById(R.id.group_chooser_join);
 
         createGroupDialog = new CreateGroupDialog(GroupChooserActivity.this, GroupChooserActivity.this);
 
@@ -147,6 +149,14 @@ public class GroupChooserActivity extends AppCompatActivity implements
                 integrator.initiateScan();
             }
         });
+
+        tvJoinById.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                joinGroupDialog = new JoinGroupDialog(GroupChooserActivity.this, GroupChooserActivity.this);
+                joinGroupDialog.show();
+            }
+        });
     }
 
     @Override
@@ -160,37 +170,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
                 try {
                     final String firebaseGroupId = EncryptUtil.reverse(scanned.split(",")[0]);
                     final String firebaseGroupPass = EncryptUtil.reverse(scanned.split(",")[1]);
-
-                    database.getReference("groups").child(firebaseGroupId)
-                            .addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    Group group = dataSnapshot.getValue(Group.class);
-                                    if(group == null) {
-                                        // id not correct
-                                        progress.setVisibility(View.GONE);
-                                        Snackbar.make(findViewById(android.R.id.content),
-                                                getString(R.string.group_connection_qr_error_msg),
-                                                Snackbar.LENGTH_LONG).show();
-                                    } else if(group.getPassword().equals(firebaseGroupPass)) {
-                                        connectToGroup(firebaseGroupId);
-                                    } else {
-                                        // pass not correct
-                                        progress.setVisibility(View.GONE);
-                                        Snackbar.make(findViewById(android.R.id.content),
-                                                getString(R.string.group_connection_qr_error_msg),
-                                                Snackbar.LENGTH_LONG).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    progress.setVisibility(View.GONE);
-                                    Snackbar.make(findViewById(android.R.id.content),
-                                            getString(R.string.group_connection_error_msg),
-                                            Snackbar.LENGTH_LONG).show();
-                                }
-                            });
+                    joinGroup(firebaseGroupId, firebaseGroupPass);
                 } catch (Exception e) {
                     progress.setVisibility(View.GONE);
                     Snackbar.make(findViewById(android.R.id.content),
@@ -220,14 +200,7 @@ public class GroupChooserActivity extends AppCompatActivity implements
         confirmGroupDialog.show();
     }
 
-    @Override
-    public void onGroupConfirmed(final String groupId) {
-        progress.setVisibility(View.VISIBLE);
-        confirmGroupDialog.dismiss();
-        connectToGroup(groupId);
-    }
-
-    private void connectToGroup(final String groupId) {
+    public void connectToGroup(final String groupId) {
         database.getReference("groups").child(groupId).child("members")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -243,32 +216,68 @@ public class GroupChooserActivity extends AppCompatActivity implements
                         }
                         if(!isCurrentUserAlreadyMemberOfGroup) {
                             // current user has not joined the group yet, so:
-                            // groups/{groupId}/members push
-                            DatabaseReference newGroupMemberRef = database.getReference("groups").child(groupId).child("members").push();
+                            // 1) groups/{groupId}/members push
+                            DatabaseReference newGroupMemberRef =
+                                    database.getReference("groups").child(groupId).child("members").push();
 
-                            GroupMember newGroupMember = new GroupMember(0, currentUserId);
+                            GroupMember newGroupMember = new GroupMember(0, currentUserId, newGroupMemberRef.getKey());
                             newGroupMemberRef.setValue(newGroupMember);
+
+                            database.getReference("groups").child(groupId)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            Group group = dataSnapshot.getValue(Group.class);
+
+                                            String currentUserId =
+                                                    SPUtil.getString(Constant.CURRENT_USER_ID, null);
+
+                                            // 2) fb_users/{userId}/groups push
+                                            DatabaseReference userGroupsRef = database
+                                                    .getReference("fb_users")
+                                                    .child(currentUserId)
+                                                    .child("groups").push();
+
+                                            GroupInUser groupInUser = new GroupInUser(
+                                                    groupId,
+                                                    group.getName()
+                                            );
+                                            userGroupsRef.setValue(groupInUser);
+
+                                            SPUtil.putString(Constant.CURRENT_GROUP_ID, groupId);
+                                            SPUtil.putString(Constant.CURRENT_GROUP_NAME, group.getName());
+                                            startMainAct();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            progress.setVisibility(View.GONE);
+                                            Snackbar.make(findViewById(android.R.id.content),
+                                                    getString(R.string.group_connection_error_msg),
+                                                    Snackbar.LENGTH_LONG).show();
+                                        }
+                                    });
+                        } else {
+                            database.getReference("groups").child(groupId)
+                                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            Group group = dataSnapshot.getValue(Group.class);
+
+                                            SPUtil.putString(Constant.CURRENT_GROUP_ID, groupId);
+                                            SPUtil.putString(Constant.CURRENT_GROUP_NAME, group.getName());
+                                            startMainAct();
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                                            progress.setVisibility(View.GONE);
+                                            Snackbar.make(findViewById(android.R.id.content),
+                                                    getString(R.string.group_connection_error_msg),
+                                                    Snackbar.LENGTH_LONG).show();
+                                        }
+                                    });
                         }
-
-                        database.getReference("groups").child(groupId)
-                                .addListenerForSingleValueEvent(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                        Group group = dataSnapshot.getValue(Group.class);
-
-                                        SPUtil.putString(Constant.CURRENT_GROUP_ID, groupId);
-                                        SPUtil.putString(Constant.CURRENT_GROUP_NAME, group.getName());
-                                        startMainAct();
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                                        progress.setVisibility(View.GONE);
-                                        Snackbar.make(findViewById(android.R.id.content),
-                                                getString(R.string.group_connection_error_msg),
-                                                Snackbar.LENGTH_LONG).show();
-                                    }
-                                });
                     }
 
                     @Override
@@ -282,7 +291,37 @@ public class GroupChooserActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onGroupConfirmError(String errorMsg) {
-        Snackbar.make(findViewById(android.R.id.content), errorMsg, Snackbar.LENGTH_LONG).show();
+    public void joinGroup(final String groupId, final String groupPass) {
+        progress.setVisibility(View.VISIBLE);
+        database.getReference("groups").child(groupId)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Group group = dataSnapshot.getValue(Group.class);
+                        if(group == null || group.getPassword() == null) {
+                            Snackbar.make(findViewById(android.R.id.content),
+                                    "A csoport ID nem jó!", Snackbar.LENGTH_LONG).show();
+                        } else if(group.getPassword().equals(groupPass)) {
+                            if(confirmGroupDialog != null) {
+                                confirmGroupDialog.dismiss();
+                            }
+                            if(joinGroupDialog != null) {
+                                joinGroupDialog.dismiss();
+                            }
+                            connectToGroup(groupId);
+                        } else {
+                            Snackbar.make(findViewById(android.R.id.content),
+                                    "A csoport jelszava nem jó!", Snackbar.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        progress.setVisibility(View.GONE);
+                        Snackbar.make(findViewById(android.R.id.content),
+                                getString(R.string.group_connection_error_msg),
+                                Snackbar.LENGTH_LONG).show();
+                    }
+                });
     }
 }

@@ -27,14 +27,9 @@
         android:id="@+id/action_poll"
         android:title="@string/poll" />
 
-    <item
-        android:id="@+id/action_random"
-        android:title="Tóruszlény" />
-
-
-    <item
+    <!--<item
         android:id="@+id/action_places"
-        android:title="Közeli helyek" />
+        android:title="Közeli helyek" />-->
 
     <item
         android:id="@+id/action_shopping"
@@ -45,8 +40,8 @@
         android:title="Értesítés küldése" />
 
     <item
-        android:id="@+id/action_invite"
-        android:title="Meghívás a csoportba" />
+        android:id="@+id/action_group_info"
+        android:title="Csoportinfók" />
 
     <item
         android:id="@+id/action_change_group"

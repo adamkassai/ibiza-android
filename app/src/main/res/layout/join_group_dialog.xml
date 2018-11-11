@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/join_group_dialog_name"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="csoport firebaseId-je"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/join_group_dialog_password"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="csoport jelszava"
+        app:layout_constraintStart_toStartOf="@+id/join_group_dialog_name"
+        app:layout_constraintTop_toBottomOf="@id/join_group_dialog_name" />
+
+    <TextView
+        android:id="@+id/join_group_dialog_ok"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/group_chooser"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Csatlakozás"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/join_group_dialog_password"
+        app:layout_constraintTop_toBottomOf="@+id/join_group_dialog_password" />
+
+</android.support.constraint.ConstraintLayout>

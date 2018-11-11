@@ -1,5 +1,7 @@
 package com.kassaiweb.ibiza.Data;
 
+import com.google.firebase.database.Exclude;
+
 public class GroupMember {
     /**
      * 0: facebook
@@ -9,13 +11,15 @@ public class GroupMember {
      * firebase id of the user
      */
     private String userId;
+    private String firebaseId;
 
     public GroupMember() {
     }
 
-    public GroupMember(int accountType, String userId) {
+    public GroupMember(int accountType, String userId, String firebaseId) {
         this.accountType = accountType;
         this.userId = userId;
+        this.firebaseId = firebaseId;
     }
 
     public int getAccountType() {
@@ -32,5 +36,14 @@ public class GroupMember {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    @Exclude
+    public String getFirebaseId() {
+        return firebaseId;
+    }
+
+    public void setFirebaseId(String firebaseId) {
+        this.firebaseId = firebaseId;
     }
 }

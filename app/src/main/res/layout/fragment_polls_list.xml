@@ -3,25 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".Poll.PollsListFragment">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/task_recycler_view"
+        android:id="@+id/polls_list_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/task_create"
+        app:layout_constraintBottom_toTopOf="@+id/polls_list_create"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/task_create"
+        android:id="@+id/polls_list_create"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/group_chooser"
         android:gravity="center"
         android:padding="8dp"
-        android:text="@string/create_task"
+        android:text="@string/create_poll"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

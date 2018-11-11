@@ -35,47 +35,49 @@
         android:id="@+id/group_chooser_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/group_chooser_lin_lay"
+        app:layout_constraintBottom_toTopOf="@+id/group_chooser_join"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/group_chooser_options" />
 
-    <LinearLayout
-        android:id="@+id/group_chooser_lin_lay"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/group_chooser_join"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="@color/group_chooser_2"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Csatlakozás firebaseId alapján"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/group_chooser_make_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/group_chooser_make_new"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/group_chooser"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="Új létrehozása"
+        android:textColor="@android:color/black"
+        app:layout_constraintBottom_toTopOf="@id/group_chooser_connect_to_other"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/group_chooser_connect_to_other"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="QR szkenneléses"
+        android:textColor="@android:color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/group_chooser_make_new"
-            android:layout_width="0dp"
-            android:layout_weight=".5"
-            android:layout_height="wrap_content"
-            android:background="@color/group_chooser"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="Új létrehozása"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/group_chooser_connect_to_other"
-            android:layout_width="0dp"
-            android:layout_weight=".5"
-            android:layout_height="wrap_content"
-            android:background="@color/group_chooser_2"
-            android:gravity="center"
-            android:padding="12dp"
-            android:text="Csatlakozás másikhoz"
-            android:textColor="@android:color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ProgressBar
         android:id="@+id/group_chooser_progress"

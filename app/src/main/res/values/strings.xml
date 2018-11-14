@@ -62,5 +62,6 @@
     <string name="password">jelszó</string>
     <string name="check">Ellenőriz</string>
     <string name="set_deadline">Határidő beállítása</string>
+    <string name="share_my_position">Aktuális hely megosztása</string>
 
 </resources>

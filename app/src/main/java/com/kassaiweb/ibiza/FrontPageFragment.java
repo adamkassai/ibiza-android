@@ -18,7 +18,6 @@ import com.google.gson.Gson;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
 import com.kassaiweb.ibiza.News.News;
 import com.kassaiweb.ibiza.Notification.NotificationFragment;
-import com.kassaiweb.ibiza.Place.PlacesFragment;
 import com.kassaiweb.ibiza.Poll.Poll;
 import com.kassaiweb.ibiza.Poll.PollsPagerFragment;
 import com.kassaiweb.ibiza.Task.Task;

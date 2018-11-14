@@ -6,7 +6,7 @@
     <color name="group_chooser">#dddddd</color>
     <color name="group_chooser_2">#bbbbbb</color>
 
-    <color name="poll_green">#ff8a80</color>
-    <color name="poll_red">#ccff90</color>
+    <color name="poll_green">#dcedc8</color>
+    <color name="poll_red">#ffcdd2</color>
 
 </resources>

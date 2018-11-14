@@ -1,14 +1,20 @@
 package com.kassaiweb.ibiza.Notification;
 
+import com.kassaiweb.ibiza.Util.DateUtil;
 
-import java.util.Date;
+import java.util.Calendar;
+import java.util.List;
 
 public class Notification {
 
     private String title;
     private String body;
     private String creatorId;
-    private Date date;
+    private String creationDate;
+    /**
+     * The id of the groupMembers, the notification will be sent to.
+     */
+    private List<String> to;
 
     public Notification() {
     }
@@ -17,7 +23,7 @@ public class Notification {
         this.title = title;
         this.body = body;
         this.creatorId = creatorId;
-        this.date = new Date();
+        this.creationDate = DateUtil.convert(Calendar.getInstance());
     }
 
     public String getTitle() {
@@ -44,11 +50,19 @@ public class Notification {
         this.creatorId = creatorId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public List<String> getTo() {
+        return to;
+    }
+
+    public void setTo(List<String> to) {
+        this.to = to;
     }
 }

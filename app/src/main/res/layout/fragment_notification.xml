@@ -1,4 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Notification.NotificationFragment">
+
+    <EditText
+        android:id="@+id/notification_body"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Értesítés szövege"
+        android:inputType="text"
+        android:lines="3"
+        android:maxLines="5" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/notification_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/notification_anonym"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/notification_body" />
+
+    <CheckBox
+        android:id="@+id/notification_anonym"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Anonym"
+        app:layout_constraintBottom_toTopOf="@+id/notification_send" />
+
+    <TextView
+        android:id="@+id/notification_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/group_chooser"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Küldés"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout><!--
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -72,4 +117,4 @@
         android:layout_gravity="center"
         android:text="Újra"
         android:visibility="gone"/>
-</FrameLayout>
+</FrameLayout>-->

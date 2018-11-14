@@ -28,13 +28,16 @@ import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.places.Places;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.kassaiweb.ibiza.Connection.NetworkChangeReceiver;
 import com.kassaiweb.ibiza.Cost.CostPagerFragment;
 import com.kassaiweb.ibiza.Group.GroupChooserActivity;
 import com.kassaiweb.ibiza.GroupInfo.GroupInfoFragment;
 import com.kassaiweb.ibiza.Notification.NotificationFragment;
-import com.kassaiweb.ibiza.Place.PlacesFragment;
+import com.kassaiweb.ibiza.Place.AddPlaceFragment;
+import com.kassaiweb.ibiza.Place.PlacesListFragment;
 import com.kassaiweb.ibiza.Poll.PollCreateFragment;
 import com.kassaiweb.ibiza.Poll.PollFragment;
 import com.kassaiweb.ibiza.Poll.PollsListFragment;
@@ -86,7 +89,20 @@ public class MainActivity extends AppCompatActivity implements
 
         initializeImageLoader();
 
-        FirebaseMessaging.getInstance().subscribeToTopic("messages");
+        // TODO only in first launch
+        FirebaseMessaging.getInstance().subscribeToTopic("messages")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        String msg;
+                        if (task.isSuccessful()) {
+                            msg = "succeeded";
+                        } else {
+                            msg = "failed";
+                        }
+                        Log.i(TAG, "Subscription to topic: messages was " + msg);
+                    }
+                });
 
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
@@ -151,7 +167,9 @@ public class MainActivity extends AppCompatActivity implements
             request.executeAsync();
         } else {
             fillHeader();
-            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
+            if (currentFragment == null) {
+                onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_places));
+            }
         }
     }
 
@@ -178,23 +196,23 @@ public class MainActivity extends AppCompatActivity implements
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new TaskListFragment());
                 break;
-            case R.id.action_costs:
+            /*case R.id.action_costs:
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new CostPagerFragment());
-                break;
+                break;*/
             case R.id.action_poll:
                 getSupportActionBar().setTitle(item.getTitle());
                 // replaceFragment(new PollsPagerFragment());
                 replaceFragment(new PollsListFragment());
                 break;
-            /*case R.id.action_places:
+            case R.id.action_places:
                 getSupportActionBar().setTitle(item.getTitle());
-                replaceFragment(new PlacesFragment());
-                break;*/
-            case R.id.action_shopping:
+                replaceFragment(new PlacesListFragment());
+                break;
+            /*case R.id.action_shopping:
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new ShoppingListFragment());
-                break;
+                break;*/
             case R.id.action_notification:
                 getSupportActionBar().setTitle(item.getTitle());
                 replaceFragment(new NotificationFragment());
@@ -333,8 +351,10 @@ public class MainActivity extends AppCompatActivity implements
         } else if ((currentFragment instanceof PollCreateFragment)) {
             // TODO: megerősítő dialógus?
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
-        } else if((currentFragment instanceof PollFragment)) {
+        } else if (currentFragment instanceof PollFragment) {
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_poll));
+        } else if (currentFragment instanceof AddPlaceFragment) {
+            onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_places));
         } else if (!(currentFragment instanceof FrontPageFragment)) {
             onNavigationItemSelected(navigationView.getMenu().findItem(R.id.action_front));
         } else {

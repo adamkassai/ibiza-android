@@ -17,7 +17,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="INSERT YOUR API KEY" />
+            android:value="AIzaSyBcN5wQk1zZhdO8ncCzUeCddEOf1EIdkmY" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
@@ -80,7 +80,9 @@
             android:label="@string/front_page"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".Group.GroupChooserActivity"></activity>
+        <activity
+            android:name=".Group.GroupChooserActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

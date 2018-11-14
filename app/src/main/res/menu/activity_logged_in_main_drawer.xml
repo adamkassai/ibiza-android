@@ -11,9 +11,9 @@
         android:id="@+id/action_tasks"
         android:title="@string/tasks" />
 
-    <item
+    <!--<item
         android:id="@+id/action_costs"
-        android:title="@string/costs" />
+        android:title="@string/costs" />-->
 
     <!--<item
         android:id="@+id/action_news"
@@ -27,13 +27,13 @@
         android:id="@+id/action_poll"
         android:title="@string/poll" />
 
-    <!--<item
-        android:id="@+id/action_places"
-        android:title="Közeli helyek" />-->
-
     <item
+        android:id="@+id/action_places"
+        android:title="Megosztott helyek" />
+
+    <!--<item
         android:id="@+id/action_shopping"
-        android:title="Bevásárlólista" />
+        android:title="Bevásárlólista" />-->
 
     <item
         android:id="@+id/action_notification"

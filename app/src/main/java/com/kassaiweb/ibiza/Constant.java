@@ -39,4 +39,6 @@ public class Constant {
     public static final String CHOICE_MULTIPLE = "multiple";
 
     public static final String GOOGLE_PLACES_API_KEY = "AIzaSyDUCMcDzJt7jRg_jfVJdmszlMaUcYrBTFI";
+    public static final String DEFAUlT_LATITUDE = "47.49801";
+    public static final String DEFAUlT_LONGITUDE = "19.03991";
 }

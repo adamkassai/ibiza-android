@@ -76,9 +76,9 @@ public class PollsAdapter extends RecyclerView.Adapter<PollsAdapter.ViewHolder> 
         });
         holder.tvQuestion.setText(poll.getQuestion());
         if(poll.isClosed()) {
-            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.poll_green));
-        } else {
             holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.poll_red));
+        } else {
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.poll_green));
         }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
